@@ -29,52 +29,67 @@ class _ProfileScreenState extends State<ProfileScreen>
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 30.h,
-            ),
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              expandedHeight: 300.h,
+              floating: true,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 30.h,
+                      ),
 
-            ///
-            ///header
-            ///
-            header(),
+                      ///
+                      ///header
+                      ///
+                      header(),
 
-            SizedBox(
-              height: 30.h,
-            ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
 
-            ///
-            ///points
-            ///
-            aboutpointts(),
-            SizedBox(height: 20.h),
-            // TabBar
-            TabBar(
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorWeight: 1.5,
-              controller: _tabController,
-              tabs: const [
-                Tab(text: 'Activity'),
-                Tab(text: 'Engagement'),
-                Tab(text: 'My Points'),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
+                      ///
+                      ///points
+                      ///
+                      aboutpointts(),
+                    ],
+                  ),
+                ),
+              ),
+              bottom: TabBar(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorWeight: 1.5,
                 controller: _tabController,
-                children: [
-                  ActivityScreen(),
-                  Center(child: Text('Engagment')),
-                  Center(child: Text('My Points')),
+                tabs: const [
+                  Tab(text: 'Activity'),
+                  Tab(text: 'Engagement'),
+                  Tab(text: 'My Points'),
                 ],
               ),
             ),
-          ],
+          ];
+        },
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              ActivityScreen(),
+              Center(child: Text('Engagement')),
+              Center(child: Text('My Points')),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Container(
